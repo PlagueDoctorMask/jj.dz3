@@ -16,15 +16,16 @@ public class Main {
     private static void acceptConnection(Connection connection) throws SQLException {
         createTable(connection);
         insertTable(connection);
+        Student.saveOrupdate(connection, 6, "Sasuke", "Uchiha", 15, "alive");
         try(Statement statement = connection.createStatement()){
             ResultSet resultSet = statement.executeQuery("select * from student");
             while (resultSet.next()){
                 int id = resultSet.getInt(1);
                 String name = resultSet.getString(2);
-                String clan = resultSet.getString(3);
+                String second_name = resultSet.getString(3);
                 int age = resultSet.getInt(4);
                 String status = resultSet.getString(5);
-                System.out.println("id - "+id+"; name - "+name+"; clan - "+clan+"; age - "+age+"; status - "+status+";" );
+                System.out.println("id - "+id+"; name - "+name+"; second_name - "+second_name+"; age - "+age+"; status - "+status+";" );
             }
         }
         System.out.println("");
@@ -32,20 +33,21 @@ public class Main {
         System.out.println("");
         System.out.println("");
         System.out.println("");
+
         UchihaIncident(connection);
     }
 
     private static void UchihaIncident(Connection connection) throws SQLException {
         try(Statement statement = connection.createStatement()){
-            statement.execute("update student set status = 'dead' where second_name = 'Uchiha' and name != 'Itachi'");
+            statement.execute("update student set status = 'dead' where second_name = 'Uchiha' and name != 'Itachi' and name != 'Sasuke'");
             ResultSet resultSet = statement.executeQuery("select * from student");
             while (resultSet.next()){
                 int id = resultSet.getInt(1);
                 String name = resultSet.getString(2);
-                String clan = resultSet.getString(3);
+                String second_name = resultSet.getString(3);
                 int age = resultSet.getInt(4);
                 String status = resultSet.getString(5);
-                System.out.println("id - "+id+"; name - "+name+"; clan - "+clan+"; age - "+age+"; status - "+status+";" );
+                System.out.println("id - "+id+"; name - "+name+"; second_name - "+second_name+"; age - "+age+"; status - "+status+";" );
             }
         }
     }
@@ -76,4 +78,6 @@ public class Main {
                 """);
         }
     }
+
+
 }
